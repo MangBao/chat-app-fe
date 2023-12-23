@@ -33,7 +33,7 @@ const SignUp = () => {
       onSubmit={(values, actions) => {
         const vals = { ...values };
         actions.resetForm();
-        fetch("http://localhost:3001/auth/register", {
+        fetch("http://localhost:3001/auth/signup", {
           method: "POST",
           credentials: "include",
           headers: {
