@@ -22,6 +22,7 @@ const Login = () => {
       onSubmit={(values, actions) => {
         const vals = { ...values };
         actions.resetForm();
+        
         fetch("http://localhost:3001/auth/login", {
           method: "POST",
           credentials: "include",
@@ -30,9 +31,6 @@ const Login = () => {
           },
           body: JSON.stringify(vals),
         })
-          .catch((err) => {
-            return;
-          })
           .then((res) => {
             if (!res || !res.ok || res.status >= 400) {
               return;
@@ -42,6 +40,9 @@ const Login = () => {
           .then((data) => {
             if (!data) return;
             console.log(data);
+          })
+          .catch((err) => {
+            console.error("Login error:", err.message);
           });
       }}
     >
