@@ -1,10 +1,14 @@
-import { Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
+import { Button, ButtonGroup, Heading, VStack, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import TextFields from "./TextFields";
 import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { AccountContext } from "../AccountContext";
 
 const Login = () => {
+  const { setUser } = useContext(AccountContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   return (
     <Formik
@@ -22,7 +26,7 @@ const Login = () => {
       onSubmit={(values, actions) => {
         const vals = { ...values };
         actions.resetForm();
-        
+
         fetch("http://localhost:3001/auth/login", {
           method: "POST",
           credentials: "include",
@@ -39,7 +43,13 @@ const Login = () => {
           })
           .then((data) => {
             if (!data) return;
-            console.log(data);
+            setUser({ ...data });
+
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
+            }
           })
           .catch((err) => {
             console.error("Login error:", err.message);
@@ -55,6 +65,9 @@ const Login = () => {
         spacing={"1rem"}
       >
         <Heading>Log In</Heading>
+        <Text as="p" color="red.500">
+          {error}
+        </Text>
         <TextFields
           name="username"
           placeholder="Enter username"

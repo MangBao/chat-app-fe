@@ -1,11 +1,15 @@
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import { Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
+import { Button, ButtonGroup, Heading, VStack, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import TextFields from "./TextFields";
+import { useContext, useState } from "react";
+import { AccountContext } from "../AccountContext";
 
 const SignUp = () => {
+  const { setUser } = useContext(AccountContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const schema = Yup.object().shape({
     username: Yup.string()
@@ -16,9 +20,10 @@ const SignUp = () => {
     password: Yup.string()
       .required("Password is required")
       .min(8, "Password must be at least 8 characters long")
+      .max(28, "Password to long!")
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
-        'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+        "Password must contain at least one uppercase letter, one lowercase letter, and one number"
       ),
 
     confirmPassword: Yup.string()
@@ -52,7 +57,13 @@ const SignUp = () => {
           })
           .then((data) => {
             if (!data) return;
-            console.log(data);
+            setUser({ ...data });
+
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
+            }
           });
       }}
     >
@@ -65,6 +76,9 @@ const SignUp = () => {
         spacing="1rem"
       >
         <Heading>Sign Up</Heading>
+        <Text as="p" color="red.500">
+          {error}
+        </Text>
         <TextFields
           name="username"
           placeholder="Enter username"
