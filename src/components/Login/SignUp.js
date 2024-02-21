@@ -3,7 +3,7 @@ import { Button, ButtonGroup, Heading, VStack, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router";
 import * as Yup from "yup";
-import TextFields from "./TextFields";
+import TextFields from "../TextFields";
 import { useContext, useState } from "react";
 import { AccountContext } from "../AccountContext";
 

@@ -1,10 +1,10 @@
 import { Button, ButtonGroup, Heading, VStack, Text } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import TextFields from "./TextFields";
+import TextFields from "../TextFields";
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AccountContext } from "../AccountContext";
+import { formSchema } from "../../common";
 
 const Login = () => {
   const { setUser } = useContext(AccountContext);
@@ -13,16 +13,7 @@ const Login = () => {
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
-      validationSchema={Yup.object().shape({
-        username: Yup.string()
-          .required("Username required!")
-          .min(6, "Username to short!")
-          .max(28, "Username to long!"),
-        password: Yup.string()
-          .required("Password required!")
-          .min(8, "Password to short!")
-          .max(28, "Password to long!"),
-      })}
+      validationSchema={formSchema}
       onSubmit={(values, actions) => {
         const vals = { ...values };
         actions.resetForm();
