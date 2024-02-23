@@ -2,6 +2,7 @@ import { Grid, GridItem, Tabs } from "@chakra-ui/react";
 import Sidebar from "./Sidebar";
 import Chat from "./Chat";
 import { createContext, useState } from "react";
+import useSocketSetup from "./useSocketSetup";
 
 export const FriendContext = createContext();
 
@@ -11,6 +12,7 @@ const Home = () => {
     // { username: "Minh Truc", connected: true, message: "Friend two" },
     // { username: "Tri Nguyen", connected: false, message: "Friend three" },
   ]);
+  useSocketSetup();
 
   return (
     <FriendContext.Provider value={{ friendList, setFriendList }}>
