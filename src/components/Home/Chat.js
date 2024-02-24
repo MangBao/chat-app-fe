@@ -7,8 +7,8 @@ const Chat = () => {
   return friendList.length > 0 ? (
     <VStack>
       <TabPanels>
-        {friendList.map((friend) => (
-          <TabPanel>{friend.message}</TabPanel>
+        {friendList.map((friend, index) => (
+          <TabPanel key={`friend:${friend}`}>{`Friend ${index}`}</TabPanel>
         ))}
       </TabPanels>
     </VStack>

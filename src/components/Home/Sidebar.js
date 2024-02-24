@@ -16,9 +16,9 @@ import { FriendContext } from "./Home";
 import AddFriendModal from "./AddFriendModal";
 
 const Sidebar = () => {
-  // eslint-disable-next-line no-unused-vars
-  const { friendList, setFriendList } = useContext(FriendContext);
+  const { friendList } = useContext(FriendContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <>
       <VStack py="1.4rem">
@@ -31,13 +31,13 @@ const Sidebar = () => {
         <Divider />
         <VStack as={TabList}>
           {friendList.map((friend) => (
-            <HStack as={Tab}>
+            <HStack as={Tab} key={`friend:${friend}`}>
               <Circle
                 bg={friend.connected ? "green.500" : "red.500"}
                 w="8px"
                 h="8px"
               />
-              <Text>{friend.username}</Text>
+              <Text>{friend}</Text>
             </HStack>
           ))}
         </VStack>

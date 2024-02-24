@@ -7,12 +7,9 @@ import useSocketSetup from "./useSocketSetup";
 export const FriendContext = createContext();
 
 const Home = () => {
-  const [friendList, setFriendList] = useState([
-    // { username: "Mang Bao", connected: true, message: "Friend one" },
-    // { username: "Minh Truc", connected: true, message: "Friend two" },
-    // { username: "Tri Nguyen", connected: false, message: "Friend three" },
-  ]);
-  useSocketSetup();
+  const [friendList, setFriendList] = useState([]);
+  useSocketSetup(setFriendList);
+  console.log(friendList);
 
   return (
     <FriendContext.Provider value={{ friendList, setFriendList }}>
